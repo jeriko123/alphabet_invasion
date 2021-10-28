@@ -1,5 +1,4 @@
-Alphabet Invasion Game
+## Alphabet Invasion Game Demo
+[link](https://jeriko123.github.io/alphabet_invasion/)
 
-Three js, rxjs
-
-work in progress
+...work in progress
