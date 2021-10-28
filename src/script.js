@@ -12,9 +12,11 @@ const wordGenerator = function* () {
     "d",
     "e",
     "f",
+    "g",
+    "h",
+    "i",
     "j",
     "k",
-    "h",
     "l",
     "m",
     "n",
@@ -24,9 +26,12 @@ const wordGenerator = function* () {
     "r",
     "s",
     "t",
-    "z",
+    "u",
+    "v",
+    "w",
+    "x",
     "y",
-    "w"
+    "z"
   ];
   let random = () => Math.ceil(Math.random() * (arr.length - 1));
 
