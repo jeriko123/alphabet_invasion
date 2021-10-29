@@ -57,12 +57,12 @@ const canvas = document.querySelector("canvas.webgl");
 const scene = new THREE.Scene();
 
 const textureLoader = new THREE.TextureLoader();
-const matcap1Texture = textureLoader.load("/textures/matcaps/3.png");
-const matcap2Texture = textureLoader.load("/textures/matcaps/12.png");
-const matcap3Texture = textureLoader.load("/textures/matcaps/9.png");
-const matcap4Texture = textureLoader.load("/textures/matcaps/8.png");
-const matcap5Texture = textureLoader.load("/textures/matcaps/7.png");
-const matcap6Texture = textureLoader.load("/textures/matcaps/6.png");
+const matcap1Texture = textureLoader.load("./textures/matcaps/3.png");
+const matcap2Texture = textureLoader.load("./textures/matcaps/12.png");
+const matcap3Texture = textureLoader.load("./textures/matcaps/9.png");
+const matcap4Texture = textureLoader.load("./textures/matcaps/8.png");
+const matcap5Texture = textureLoader.load("./textures/matcaps/7.png");
+const matcap6Texture = textureLoader.load("./textures/matcaps/6.png");
 
 let score = 0,
   text1,
@@ -123,7 +123,7 @@ const updateScore = (font) => {
   return text;
 };
 
-fontLoader.load("/fonts/helvetiker_bold.typeface.json", (font) => {
+fontLoader.load("./fonts/helvetiker_bold.typeface.json", (font) => {
   [text1, word1] = createWord(font);
   [text2, word2] = createWord(font);
   scoreText = updateScore(font);
