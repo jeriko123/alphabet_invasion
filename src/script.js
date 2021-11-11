@@ -5,38 +5,14 @@ import * as dat from "dat.gui";
 import { fromEvent, pluck } from "rxjs";
 
 const wordGenerator = function* () {
-  let arr = [
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "g",
-    "h",
-    "i",
-    "j",
-    "k",
-    "l",
-    "m",
-    "n",
-    "o",
-    "p",
-    "q",
-    "r",
-    "s",
-    "t",
-    "u",
-    "v",
-    "w",
-    "x",
-    "y",
-    "z"
-  ];
-  let random = () => Math.ceil(Math.random() * (arr.length - 1));
+  const randomLetter = () =>
+    String.fromCharCode(
+      Math.random() * ("z".charCodeAt(0) - "a".charCodeAt(0)) +
+        "a".charCodeAt(0)
+    );
 
   while (true) {
-    yield arr[random()];
+    yield randomLetter();
   }
 };
 
@@ -62,7 +38,9 @@ const matcap2Texture = textureLoader.load("./textures/matcaps/12.png");
 const matcap3Texture = textureLoader.load("./textures/matcaps/9.png");
 const matcap4Texture = textureLoader.load("./textures/matcaps/8.png");
 const matcap5Texture = textureLoader.load("./textures/matcaps/7.png");
-const matcap6Texture = textureLoader.load("./textures/matcaps/6.png");
+const matcap6Texture = textureLoader.load("./textures/matcaps/4.png");
+const matcap7Texture = textureLoader.load("./textures/matcaps/2.png");
+const matcap8Texture = textureLoader.load("./textures/matcaps/11.png");
 
 let score = 0,
   text1,
@@ -70,6 +48,7 @@ let score = 0,
   word1,
   word2,
   scoreText;
+let velocity = 0.02;
 
 const fontLoader = new THREE.FontLoader();
 const createWord = (font) => {
@@ -78,20 +57,36 @@ const createWord = (font) => {
 
   const textGeometry = new THREE.TextBufferGeometry(wordRandom, {
     font: font,
-    size: 0.4,
+    size: 0.5,
     height: 0.2,
     curveSegments: 8
   });
   textGeometry.center();
 
   let material = matcap4Texture;
-  console.log(score);
-  if (score > 20) {
+  if (score > 10) {
     material = matcap3Texture;
+    velocity = 0.03;
+  }
+
+  if (score > 20) {
+    material = matcap7Texture;
+    velocity = 0.035;
   }
 
   if (score > 30) {
+    material = matcap6Texture;
+    velocity = 0.038;
+  }
+
+  if (score > 40) {
+    material = matcap8Texture;
+    velocity = 0.042;
+  }
+
+  if (score > 50) {
     material = matcap2Texture;
+    velocity = 0.048;
   }
 
   const textMaterial = new THREE.MeshMatcapMaterial({
@@ -99,7 +94,7 @@ const createWord = (font) => {
   });
   const text = new THREE.Mesh(textGeometry, textMaterial);
   scene.add(text);
-  text.position.set(random(), 5, 0);
+  text.position.set(random(), 4.5, 0);
 
   return [text, wordRandom];
 };
@@ -128,8 +123,8 @@ fontLoader.load("./fonts/helvetiker_bold.typeface.json", (font) => {
   [text2, word2] = createWord(font);
   scoreText = updateScore(font);
 
-  let tetPosition1 = 2;
-  let tetPosition2 = 3;
+  let tetPosition1 = 3;
+  let tetPosition2 = 4;
 
   let pressedKey;
   keys$.subscribe((v) => {
@@ -139,8 +134,8 @@ fontLoader.load("./fonts/helvetiker_bold.typeface.json", (font) => {
   const tick = () => {
     text1.position.y = tetPosition1;
     text2.position.y = tetPosition2;
-    tetPosition1 = tetPosition1 - 0.01 * tetPosition1;
-    tetPosition2 = tetPosition2 - 0.02 * tetPosition2;
+    tetPosition1 = tetPosition1 - velocity;
+    tetPosition2 = tetPosition2 - velocity;
 
     if (pressedKey == word1) {
       scene.remove(text1);
