@@ -48,7 +48,7 @@ let score = 0,
   word1,
   word2,
   scoreText;
-let velocity = 0.02;
+let velocity = 0.01;
 
 const fontLoader = new THREE.FontLoader();
 const createWord = (font) => {
